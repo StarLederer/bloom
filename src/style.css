@@ -1,0 +1,17 @@
+body {
+  min-height: 100vh;
+}
+
+.card {
+  @apply
+    bg-srf
+    round-m0
+    pd-m--
+    flex
+    flex-col
+    gap-m0;
+}
+
+.cnv {
+  /* @apply; */
+}

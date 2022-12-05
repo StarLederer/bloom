@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bloom</title>
+  <script type="module" src="./index.ts" defer></script>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body class="bg-def text-fg-2 hue-45 pd-m0 flex justify-center items-center">
+  <div class="flex flex-col gap-m--">
+    <div class="gap-s-- flex flex-wrap items-start">
+      <div class="card">
+        Curves
+        <canvas class="cnv" id="curves-canvas"></canvas>
+        <div class="flex flex-col gap-s-- text-fg-2">
+          <p class="">
+            Left click next to a point to move it
+          </p>
+          <p class="">
+            Right click next to a point to delete it
+          </p>
+          <p class="">
+            Left click away from points to create new
+          </p>
+        </div>
+      </div>
+      <div class="card">
+        Scattering profile
+        <canvas class="cnv" id="scattering-profile-canvas"></canvas>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

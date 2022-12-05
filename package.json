@@ -1,0 +1,22 @@
+{
+  "name": "bloom",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "@iconify-json/mdi": "^1.1.36",
+    "@unocss/preset-icons": "^0.47.5",
+    "@unocss/transformer-directives": "^0.47.5",
+    "@unocss/vite": "^0.47.5",
+    "postcss": "^8.4.19",
+    "postcss-preset-env": "^7.8.3",
+    "typescript": "^4.9.3",
+    "unocss": "^0.45.29",
+    "vite": "^3.1.0"
+  }
+}
