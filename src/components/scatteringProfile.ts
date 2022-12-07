@@ -22,7 +22,7 @@ const component = (target: HTMLCanvasElement, shape: number[][]) => {
   // Draw gridlines
   ctx.strokeStyle = "#fff2";
   values.forEach((_, i) => {
-    const t = i / (values.length - 1);
+    const t = i > 0 ? shape[i-1][0] : 0;
     const r = x / 2;
     const px = Math.sin(t * Math.PI / 2) * r;
     const py = -Math.cos(t * Math.PI / 2) * r;
@@ -43,7 +43,7 @@ const component = (target: HTMLCanvasElement, shape: number[][]) => {
   // Draw distances
   ctx.strokeStyle = "#fff4";
   values.forEach((val, i) => {
-    const t = i / (values.length - 1);
+    const t = i > 0 ? shape[i-1][0] : 0;
     const r = x / 2;
     const px = Math.sin(t * Math.PI / 2) * r * val;
     const py = -Math.cos(t * Math.PI / 2) * r * val;
@@ -67,12 +67,12 @@ const component = (target: HTMLCanvasElement, shape: number[][]) => {
     const r = x / 2;
 
     const val1 = values[i];
-    const t1 = i / (values.length - 1);
+    const t1 = i > 0 ? shape[i-1][0] : 0;
     const px1 = Math.sin(t1 * Math.PI / 2) * r * val1;
     const py1 = -Math.cos(t1 * Math.PI / 2) * r * val1;
 
     const val2 = values[i + 1];
-    const t2 = (i + 1) / (values.length - 1);
+    const t2 = i > 0 ? shape[i][0] : 0;
     const px2 = Math.sin(t2 * Math.PI / 2) * r * val2;
     const py2 = -Math.cos(t2 * Math.PI / 2) * r * val2;
 
