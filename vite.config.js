@@ -6,9 +6,12 @@ import transformerDirective from '@unocss/transformer-directives'
 import unocssPresetWrapp from "./unocss-preset";
 
 const root = resolve("./src");
+const dist = resolve("./dist");
 
 export default defineConfig({
   root,
+
+  base: "./",
 
   plugins: [
     unocss({
@@ -21,4 +24,8 @@ export default defineConfig({
       ],
     }),
   ],
+
+  build: {
+    outDir: dist,
+  }
 })
