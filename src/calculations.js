@@ -31,13 +31,14 @@ const getPoint = (shape, pos) => {
   return lerp(p0[1], p1[1], t);
 };
 
-const getValues = (shapeP) => {
-  const values = Array(shapeP.length + 1).fill(1);
+const getValues = (shapeP, numPoints) => {
+  const values = Array(numPoints).fill(1);
   for (let i = values.length - 1; i >= 1; --i) {
+    let pointValue = getPoint(shapeP, (i-1) / (values.length-1));
     for (let j = i; j < values.length; ++j) {
-      values[j] *= shapeP[i - 1][1];
+      values[j] *= pointValue;
     }
-    values[i - 1] *= 1 - shapeP[i - 1][1];
+    values[i - 1] *= 1 - pointValue;
   }
   return values;
 };

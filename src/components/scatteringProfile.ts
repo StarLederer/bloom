@@ -9,20 +9,28 @@ import {
 } from "../calculations.js";
 
 const component = (target: HTMLCanvasElement, shape: number[][]) => {
+  // 8 is a approxmiately how many mips a 1080p screen would have.
+  // This does not really affect the calculations but
+  // more mips means better resolution but also a
+  // smaller graph because everything always adds up to 1
+  const mips = 8;
+
   const ctx = target.getContext("2d");
   if (!ctx) throw Error("No context");
 
   const x = target.width;
   const y = target.height;
 
-  const values = getValues(shape);
+  const shapeP = getPrecomputedShape(shape);
+  const values = getValues(shapeP, mips);
 
   ctx.clearRect(0, 0, x, y);
 
   // Draw gridlines
   ctx.strokeStyle = "#fff2";
-  values.forEach((_, i) => {
-    const t = i / (values.length - 1);
+
+  for (let i = 0; i < mips; ++i) {
+    const t = i / (mips - 1);
     const r = x / 2;
     const px = Math.sin(t * Math.PI / 2) * r;
     const py = -Math.cos(t * Math.PI / 2) * r;
@@ -38,7 +46,7 @@ const component = (target: HTMLCanvasElement, shape: number[][]) => {
     }
 
     ctx.stroke();
-  })
+  }
 
   // Draw distances
   ctx.strokeStyle = "#fff4";
