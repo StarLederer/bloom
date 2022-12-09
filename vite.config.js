@@ -1,19 +1,14 @@
 import { resolve } from 'path'
 import { defineConfig } from 'vite'
+import solidPlugin from 'vite-plugin-solid';
 import unocss from '@unocss/vite';
 import presetIcons from '@unocss/preset-icons';
 import transformerDirective from '@unocss/transformer-directives'
 import unocssPresetWrapp from "./unocss-preset";
 
-const root = resolve("./src");
-const dist = resolve("./dist");
-
 export default defineConfig({
-  root,
-
-  base: "./",
-
   plugins: [
+    solidPlugin(),
     unocss({
       presets: [
         presetIcons(),
@@ -24,9 +19,4 @@ export default defineConfig({
       ],
     }),
   ],
-
-  build: {
-    outDir: dist,
-    emptyOutDir: true,
-  }
 })

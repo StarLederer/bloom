@@ -1,6 +1,6 @@
-const lerp = (a, b, t) => (a + (b - a) * t);
+const lerp = (a: number, b: number, t: number) => (a + (b - a) * t);
 
-const getPrecomputedShape = (shape) => {
+const getPrecomputedShape = (shape: number[][]) => {
   let pos = 0;
   return shape.map((point) => {
     const o = [point[0] - pos, point[1]];
@@ -9,7 +9,7 @@ const getPrecomputedShape = (shape) => {
   })
 };
 
-const getRange = (shape, pos) => {
+const getRange = (shape: number[][], pos: number): [number[], number[], number] => {
   let offset = shape[0][0];
 
   for (let i = 0; i < shape.length - 1; ++i) {
@@ -22,7 +22,7 @@ const getRange = (shape, pos) => {
   return [shape[shape.length - 2], shape[shape.length - 1], offset];
 };
 
-const getPoint = (shape, pos) => {
+const getPoint = (shape: number[][], pos: number) => {
   let [p0, p1, offset] = getRange(shape, pos);
   let start = offset - p1[0];
   let end = offset;
@@ -31,10 +31,10 @@ const getPoint = (shape, pos) => {
   return lerp(p0[1], p1[1], t);
 };
 
-const getValues = (shapeP, numPoints) => {
+const getValues = (shapeP: number[][], numPoints: number) => {
   const values = Array(numPoints).fill(1);
   for (let i = values.length - 1; i >= 1; --i) {
-    let pointValue = getPoint(shapeP, (i-1) / (values.length-1));
+    let pointValue = getPoint(shapeP, (i - 1) / (values.length - 1));
     for (let j = i; j < values.length; ++j) {
       values[j] *= pointValue;
     }
