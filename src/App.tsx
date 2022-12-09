@@ -55,7 +55,7 @@ const mathShape = (x: number, i: number, h: number, a: number, b: number): numbe
 }
 
 const shap = (x: number): number => {
-  return mathShape(x, 1/2, 0.8, 0.8, 0.8);
+  return mathShape(x, 0.6, 0.9, 0.3, 0.8);
 }
 
 const Main: Component = () => {
