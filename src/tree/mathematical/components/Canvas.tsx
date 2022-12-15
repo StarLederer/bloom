@@ -6,11 +6,6 @@ type IProps = {
 };
 
 const Main: Component<IProps> = (props) => {
-  const [i, setI] = createSignal(0.6);
-  const [h, setH] = createSignal(0.9);
-  const [a, setA] = createSignal(0.8);
-  const [b, setB] = createSignal(0.8);
-
   const [width, setWidth] = createSignal(0);
   // const [height, setHeight] = createSignal(0);
 
