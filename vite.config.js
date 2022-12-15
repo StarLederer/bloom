@@ -7,6 +7,8 @@ import transformerDirective from '@unocss/transformer-directives'
 import unocssPresetWrapp from "./unocss-preset";
 
 export default defineConfig({
+  base: "./",
+
   resolve: {
     alias: {
       '~': resolve('./src'),
