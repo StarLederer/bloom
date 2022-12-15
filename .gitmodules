@@ -1,3 +1,6 @@
 [submodule "unocss-preset"]
 	path = unocss-preset
 	url = https://github.com/StarLederer/unocss-preset.git
+[submodule "src/ui"]
+	path = src/ui
+	url = https://github.com/StarLederer/solid-components.git

@@ -1,10 +1,10 @@
 import { Component, createEffect } from "solid-js";
-import { remStringToPx } from "../../util";
-import { theme } from "../../../unocss-preset";
-
-import Canvas from "../Canvas";
+import { remStringToPx } from "~/util";
+import { theme } from "~/../unocss-preset";
 
 type IProps = {
+  width: number;
+  height: number;
   shape: (x: number) => number;
   resolution: number;
 };
@@ -18,15 +18,17 @@ const Main: Component<IProps> = (props) => {
     let ctx = cnv.getContext('2d');
     if (!ctx) return;
 
-    const x = cnv.width;
-    const y = cnv.height;
+    const x = props.width;
+    const y = props.height;
+    cnv.width = x;
+    cnv.height = y;
 
     ctx.clearRect(0, 0, x, y);
 
     // Draw axis
     ctx.fillStyle = "#fff2";
     ctx.fillRect(0, 0, x, 1);
-    ctx.fillRect(0, 0, 1, y);
+    ctx.fillRect(0, 1, 1, y);
 
     // Visualize function values
     ctx.strokeStyle = "#fff";
@@ -41,7 +43,7 @@ const Main: Component<IProps> = (props) => {
   });
 
   return (
-    <Canvas ref={cnv}></Canvas>
+    <canvas ref={cnv} style="transform: scaleY(-1)"></canvas>
   )
 };
 

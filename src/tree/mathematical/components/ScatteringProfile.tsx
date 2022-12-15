@@ -1,9 +1,10 @@
 import { Component, createEffect } from "solid-js";
-import { remStringToPx } from "../../util";
-import { theme } from "../../../unocss-preset";
-import Canvas from "../Canvas";
+import { theme } from "~/../unocss-preset";
+import { remStringToPx } from "~/util";
 
 type IProps = {
+  width: number;
+  height: number;
   shape: (x: number) => number;
   resolution: number;
 };
@@ -28,8 +29,10 @@ const Main: Component<IProps> = (props) => {
     let ctx = cnv.getContext('2d');
     if (!ctx) return;
 
-    const x = cnv.width;
-    const y = cnv.height;
+    const x = props.width;
+    const y = props.height;
+    cnv.width = x;
+    cnv.height = y;
 
     const values = getValues();
 
@@ -108,7 +111,7 @@ const Main: Component<IProps> = (props) => {
   });
 
   return (
-    <Canvas ref={cnv}></Canvas>
+    <canvas width={props.width} height={props.height} ref={cnv}></canvas>
   )
 };
 
