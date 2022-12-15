@@ -22,9 +22,9 @@ type IProps = {
 };
 
 const Main: Component<IProps> = (props) => {
-  const [i, setI] = createSignal(0.6);
+  const [i, setI] = createSignal(0.5);
   const [h, setH] = createSignal(0.9);
-  const [a, setA] = createSignal(0.8);
+  const [a, setA] = createSignal(0.3);
   const [b, setB] = createSignal(0.8);
 
   const shape = () => {
