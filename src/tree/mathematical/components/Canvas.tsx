@@ -15,7 +15,8 @@ const Main: Component<IProps> = (props) => {
     setWidth(wrapper?.offsetWidth ?? 0);
   };
 
-  window.addEventListener("resize", updateSize);
+  // This is leteral ass but my router prevents me from being able to use onMount to guarantee refs being initialized
+  setTimeout(updateSize, 1000);
 
   return (
     <div ref={wrapper} class={props.class}>
