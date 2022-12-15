@@ -41,7 +41,7 @@ const Main: Component<IProps> = (props) => {
         <label class={styles.label}>
           <span>
             Bump angle&nbsp;
-            <span class="text-fg-3">{Math.round(i() * 45)}deg</span>
+            <span class="text-fg-3">{Math.round(i() * 45)}deg ({i()})</span>
           </span>
           <Slider step={0.01} signal={[i, setI]} />
           <span></span>
