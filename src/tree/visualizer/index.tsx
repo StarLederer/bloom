@@ -99,23 +99,15 @@ const Main: Component<IProps> = (props) => {
     }
   ]);
 
-  let curveCanvas: HTMLCanvasElement | undefined;
-  let profileCanvas: HTMLCanvasElement | undefined;
+  const renderCurves = () => (ctx: CanvasRenderingContext2D) => {
+    // Clear pass
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-  // Draw curves
-  createEffect(() => {
-    if (curveCanvas) {
-      let ctx = curveCanvas.getContext('2d');
-      if (!ctx) return;
-      ctx.clearRect(0, 0, curveCanvas.width, curveCanvas.height);
-      drawAxis(ctx);
-    };
+    // Grid pass
+    drawAxis(ctx);
 
+    // Curves pass
     curves().forEach((curve, i) => {
-      if (!curveCanvas) return;
-      let ctx = curveCanvas.getContext('2d');
-      if (!ctx) return;
-
       switch (curve.type) {
         case "mathematical":
           drawCurvesMath(
@@ -132,22 +124,17 @@ const Main: Component<IProps> = (props) => {
           break;
       }
     });
-  });
+  };
 
-  // Draw profiles
-  createEffect(() => {
-    if (profileCanvas) {
-      let ctx = profileCanvas.getContext('2d');
-      if (!ctx) return;
-      ctx.clearRect(0, 0, profileCanvas.width, profileCanvas.height);
-      drawProfileGrid(ctx, 8);
-    };
+  const renderProfiles = () => (ctx: CanvasRenderingContext2D) => {
+    // Clear pass
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
+    // Grid pass
+    drawProfileGrid(ctx, 8);
+
+    // Curves pass
     curves().forEach((curve, i) => {
-      if (!profileCanvas) return;
-      let ctx = profileCanvas.getContext('2d');
-      if (!ctx) return;
-
       switch (curve.type) {
         case "mathematical":
           drawProfileMath(
@@ -156,14 +143,16 @@ const Main: Component<IProps> = (props) => {
               return mathShape(x, curve.i[0](), curve.h[0](), curve.a[0](), curve.b[0]());
             },
             8,
-            getCurveColor(i))
+            getCurveColor(i)
+          );
           break;
         case "point-based":
           drawProfilePB(ctx, curve.shape[0](), getCurveColor(i));
           break;
       }
     });
-  });
+  };
+
 
   return (
     <Route path={props.path} class="height-full flex items-stretch justify-center">
@@ -221,8 +210,8 @@ const Main: Component<IProps> = (props) => {
               return [...curves, {
                 type: "point-based",
                 shape: createSignal([
-                  [0.0, 0.0],
-                  [1.0, 0.0]
+                  [0.0, 0.5],
+                  [1.0, 0.5]
                 ])
               }];
             });
@@ -233,8 +222,8 @@ const Main: Component<IProps> = (props) => {
       </section>
 
       <section class="bg-def text-fg-2 pd-m0" style="overflow: scroll">
-        <Canvas ref={curveCanvas} class={styles.canvasCard} />
-        <Canvas ref={profileCanvas} class={styles.canvasCard} />
+        <Canvas class={styles.canvasCard} render={renderCurves()} />
+        <Canvas class={styles.canvasCard} render={renderProfiles()} />
       </section>
     </Route>
   )

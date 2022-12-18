@@ -1,33 +1,27 @@
-import { Component, createEffect, Signal } from "solid-js";
+import { Component, Signal } from "solid-js";
 import { theme } from "~/../unocss-preset";
 import { remStringToPx } from "~/util";
-import {drawCurves} from "../pointBased";
+import { drawCurves } from "../pointBased";
 import Canvas from "./Canvas";
-import { getCurveColor, indexToHue } from "../colors";
+import { getCurveColor } from "../colors";
 
 const Main: Component<{
   shape: Signal<number[][]>;
   colorI: number;
 }> = (props) => {
-  let cnv: HTMLCanvasElement | undefined;
+  const render = () => (ctx: CanvasRenderingContext2D) => {
+    // Clear pass
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-  // Draw
-  createEffect(() => {
-    if (!cnv) return;
-    let ctx = cnv.getContext('2d');
-    if (!ctx) return;
+    // Grid pass
+    const x = ctx.canvas.width;
+    const y = ctx.canvas.height;
 
-    const [shape, setShape] = props.shape;
-
-    const x = cnv.width;
-    const y = cnv.height;
-
-    ctx.clearRect(0, 0, x, y);
-
-    // Draw axis
     ctx.fillStyle = "#fff2";
     ctx.fillRect(0, 0, x, 1);
     ctx.fillRect(0, 0, 1, y);
+
+    const [shape, setShape] = props.shape;
 
     // Draw curves
     drawCurves(ctx, shape(), getCurveColor(props.colorI));
@@ -42,20 +36,17 @@ const Main: Component<{
       ctx?.arc(p[0] * x, p[1] * y, r, 0, Math.PI * 2);
       ctx?.fill();
     });
-  });
+  };
 
-  // Click listener
-  createEffect(() => {
-    if (!cnv) return;
-
-    const [shape, setShape] = props.shape;
-
-    cnv.addEventListener("contextmenu", (ev) => {
+  const eventListeners = () => ({
+    "contextmenu": (ev: MouseEvent) => {
       ev.preventDefault();
-    });
+    },
+    "mousedown": (ev: MouseEvent) => {
+      const cnv = ev.target as HTMLCanvasElement;
+      if (!cnv) return;
 
-    cnv.addEventListener("mousedown", (ev) => {
-      if (!cnv) return; // we shouldn't need this, I think. Typescript bug?
+      const [shape, setShape] = props.shape;
 
       ev.cancelBubble = true;
       ev.stopPropagation();
@@ -103,14 +94,12 @@ const Main: Component<{
           return [...prev, newPoint].sort((a, b) => (a[0] - b[0]));
         });
       }
-    });
+    },
   });
 
   return (
     <>
-      <div class="">
-        <Canvas ref={cnv} />
-      </div>
+      <Canvas render={render()} eventListeners={eventListeners()} />
       <p style="user-select: all">
         {props.shape[0]().map((point) => (
           <div>
