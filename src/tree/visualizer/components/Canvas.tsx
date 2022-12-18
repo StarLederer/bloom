@@ -1,7 +1,7 @@
-import { Component, createSignal, JSXElement } from "solid-js";
+import { Component, createSignal } from "solid-js";
 
 type IProps = {
-  getChildren: (width: number, height: number) => JSXElement;
+  ref?: HTMLCanvasElement;
   class?: string;
 };
 
@@ -16,11 +16,11 @@ const Main: Component<IProps> = (props) => {
   };
 
   // This is leteral ass but my router prevents me from being able to use onMount to guarantee refs being initialized
-  setTimeout(updateSize, 1000);
+  setInterval(updateSize, 1000);
 
   return (
     <div ref={wrapper} class={props.class}>
-      {props.getChildren(width(), width())}
+      <canvas width={width()} height={width()} ref={props.ref}></canvas>
     </div>
   )
 };

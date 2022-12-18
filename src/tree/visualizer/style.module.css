@@ -1,0 +1,6 @@
+.canvasCard {
+  width: calc(50vh - 0.5rem * 3 - 1px);
+  @apply bg-srf round-m0 mg-be-s;
+  aspect-ratio: 1/1;
+  overflow: hidden;
+}

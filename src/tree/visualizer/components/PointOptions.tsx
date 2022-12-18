@@ -1,20 +1,14 @@
 import { Component, createEffect, Signal } from "solid-js";
-import { remStringToPx } from "../util";
-import { theme } from "../../unocss-preset";
-import {
-  lerp,
-  getPrecomputedShape,
-  getRange,
-  getPoint,
-  getValues
-} from "../calculations";
+import { theme } from "~/../unocss-preset";
+import { remStringToPx } from "~/util";
+import {drawCurves} from "../pointBased";
 import Canvas from "./Canvas";
+import { getCurveColor, indexToHue } from "../colors";
 
-type IProps = {
-  shapeSignal: Signal<number[][]>;
-};
-
-const Main: Component<IProps> = (props) => {
+const Main: Component<{
+  shape: Signal<number[][]>;
+  colorI: number;
+}> = (props) => {
   let cnv: HTMLCanvasElement | undefined;
 
   // Draw
@@ -23,7 +17,7 @@ const Main: Component<IProps> = (props) => {
     let ctx = cnv.getContext('2d');
     if (!ctx) return;
 
-    const [shape, setShape] = props.shapeSignal;
+    const [shape, setShape] = props.shape;
 
     const x = cnv.width;
     const y = cnv.height;
@@ -36,17 +30,7 @@ const Main: Component<IProps> = (props) => {
     ctx.fillRect(0, 0, 1, y);
 
     // Draw curves
-    ctx.strokeStyle = "#fff";
-    const shapeP = getPrecomputedShape(shape());
-    {
-      ctx.beginPath();
-      // ctx.moveTo(0, getPoint(shapeP, 0));
-      for (let i = 0; i < x; ++i) {
-        const py = getPoint(shapeP, i / x);
-        ctx.lineTo(i, py * y);
-      }
-      ctx.stroke();
-    }
+    drawCurves(ctx, shape(), getCurveColor(props.colorI));
 
     // Draw points
     ctx.fillStyle = "#fff";
@@ -64,7 +48,7 @@ const Main: Component<IProps> = (props) => {
   createEffect(() => {
     if (!cnv) return;
 
-    const [shape, setShape] = props.shapeSignal;
+    const [shape, setShape] = props.shape;
 
     cnv.addEventListener("contextmenu", (ev) => {
       ev.preventDefault();
@@ -123,7 +107,22 @@ const Main: Component<IProps> = (props) => {
   });
 
   return (
-    <Canvas ref={cnv}></Canvas>
+    <>
+      <div class="">
+        <Canvas ref={cnv} />
+      </div>
+      <p style="user-select: all">
+        {props.shape[0]().map((point) => (
+          <div>
+            [
+            {Math.round((point[0] + Number.EPSILON) * 100) / 100},
+            {Math.round((point[1] + Number.EPSILON) * 100) / 100}
+            ]
+          </div>
+        ))}
+      </p>
+    </>
+
   )
 };
 
