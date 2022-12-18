@@ -59,7 +59,45 @@ type IPointCurve = {
 type ICurve = IMathematicalCurve | IPointCurve;
 
 const Main: Component<IProps> = (props) => {
-  const [curves, setCurves] = createSignal<ICurve[]>([]);
+  const [curves, setCurves] = createSignal<ICurve[]>([
+    {
+      type: "point-based",
+      shape: createSignal([
+        [0.0, 0.6],
+        [0.2, 0.6],
+        [0.4, 0.6],
+        [0.6, 0.6],
+        [0.8, 0.6],
+        [1.0, 0.6],
+      ]),
+    },
+    {
+      type: "point-based",
+      shape: createSignal([
+        [0.0, 0.3],
+        [0.1, 0.8],
+        [0.2, 0.8],
+        [0.3, 0.8],
+        [0.4, 0.8],
+        [0.5, 0.8],
+        [0.6, 0.8],
+        [0.7, 0.8],
+        [0.8, 0.8],
+        [0.9, 0.8],
+        [1.0, 0.8],
+      ]),
+    },
+    {
+      type: "point-based",
+      shape: createSignal([
+        [0.0, 0.3],
+        [0.1, 0.8],
+        [0.5, 0.83],
+        [0.9, 0.8],
+        [1.0, 0.7],
+      ]),
+    }
+  ]);
 
   let curveCanvas: HTMLCanvasElement | undefined;
   let profileCanvas: HTMLCanvasElement | undefined;
