@@ -23,21 +23,30 @@ type IProps = {
 };
 
 const Configurator: ParentComponent<{
-  name: string
+  curve: ICurve;
   onRemove: () => void;
   hue: number
 }> = (props) => {
   return (
     <div class="flex flex-col gap-s++ bg-srf pd-m0 round-m0 text-fg-1" style={`--hue: ${props.hue}`}>
-      <h3 class="text-fg-0 font-bold">{props.name}</h3>
+      <h3 class="text-fg-0 font-bold">{props.curve.type}</h3>
       {props.children}
       <div class="flex gap-s-">
         <Button onClick={props.onRemove} hue={0} class="flex-1 round-m0 pd-m0">
           <div class="i-mdi-remove" />
         </Button>
-        {/* <Button onClick={props.onRemove} class="flex-1 round-m0">
-          Show
-        </Button> */}
+        <Button
+          onClick={() => {
+            props.curve.visible[1]((prev) => !prev);
+          }}
+          class="flex-1 round-m0 pd-m0"
+        >
+          {props.curve.visible[0]() ? (
+            <div class="i-mdi-eye" />
+          ) : (
+            <div class="i-mdi-eye-off" />
+          )}
+        </Button>
       </div>
     </div>
   );
@@ -56,12 +65,15 @@ type IPointCurve = {
   shape: Signal<number[][]>;
 }
 
-type ICurve = IMathematicalCurve | IPointCurve;
+type ICurve = (IMathematicalCurve | IPointCurve) & {
+  visible: Signal<boolean>
+};
 
 const Main: Component<IProps> = (props) => {
   const [curves, setCurves] = createSignal<ICurve[]>([
     {
       type: "point-based",
+      visible: createSignal(false),
       shape: createSignal([
         [0.0, 0.6],
         [0.2, 0.6],
@@ -73,6 +85,7 @@ const Main: Component<IProps> = (props) => {
     },
     {
       type: "point-based",
+      visible: createSignal(false),
       shape: createSignal([
         [0.0, 0.3],
         [0.1, 0.8],
@@ -89,6 +102,7 @@ const Main: Component<IProps> = (props) => {
     },
     {
       type: "point-based",
+      visible: createSignal(true),
       shape: createSignal([
         [0.0, 0.3],
         [0.1, 0.8],
@@ -108,6 +122,8 @@ const Main: Component<IProps> = (props) => {
 
     // Curves pass
     curves().forEach((curve, i) => {
+      if (!curve.visible[0]()) return;
+
       switch (curve.type) {
         case "mathematical":
           drawCurvesMath(
@@ -135,6 +151,8 @@ const Main: Component<IProps> = (props) => {
 
     // Curves pass
     curves().forEach((curve, i) => {
+      if (!curve.visible[0]()) return;
+
       switch (curve.type) {
         case "mathematical":
           drawProfileMath(
@@ -160,7 +178,7 @@ const Main: Component<IProps> = (props) => {
         {curves().map((curve, i) => (
           <Configurator
             hue={indexToHue(i)}
-            name={curve.type}
+            curve={curve}
             onRemove={() => {
               setCurves((curves) => {
                 curves.splice(i, 1);
@@ -193,6 +211,7 @@ const Main: Component<IProps> = (props) => {
             setCurves((curves) => {
               return [...curves, {
                 type: "mathematical",
+                visible: createSignal(true),
                 i: createSignal(0.5),
                 h: createSignal(0.9),
                 a: createSignal(0.3),
@@ -209,6 +228,7 @@ const Main: Component<IProps> = (props) => {
             setCurves((curves) => {
               return [...curves, {
                 type: "point-based",
+                visible: createSignal(true),
                 shape: createSignal([
                   [0.0, 0.5],
                   [1.0, 0.5]
