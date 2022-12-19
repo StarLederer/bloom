@@ -106,7 +106,7 @@ const Main: Component<IProps> = (props) => {
       shape: createSignal([
         [0.0, 0.3],
         [0.1, 0.8],
-        [0.5, 0.83],
+        [0.5, 0.9],
         [0.9, 0.8],
         [1.0, 0.7],
       ]),
