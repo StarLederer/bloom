@@ -38,6 +38,8 @@ const Main: Component<IProps> = (props) => {
     });
   });
 
+  window.addEventListener('resize', updateSize);
+
   return (
     <div ref={wrapper} class={props.class}>
       <canvas ref={cnv}></canvas>
