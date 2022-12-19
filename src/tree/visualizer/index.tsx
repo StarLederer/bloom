@@ -171,7 +171,6 @@ const Main: Component<IProps> = (props) => {
     });
   };
 
-
   return (
     <Route path={props.path} class="height-full flex items-stretch justify-center">
       <section class="flex flex-col items-stretch pd-m0 gap-s" style="overflow: scroll">
