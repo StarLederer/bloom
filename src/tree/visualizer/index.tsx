@@ -41,11 +41,8 @@ const Configurator: ParentComponent<{
           }}
           class="flex-1 round-m0 pd-m0"
         >
-          {props.curve.visible[0]() ? (
-            <div class="i-mdi-eye" />
-          ) : (
-            <div class="i-mdi-eye-off" />
-          )}
+          <div class="absolute transition i-mdi-eye" style={`opacity: ${props.curve.visible[0]() ? 1 : 0}`} />
+          <div class="absolute transition i-mdi-eye-off" style={`opacity: ${props.curve.visible[0]() ? 0 : 1}`} />
         </Button>
       </div>
     </div>
