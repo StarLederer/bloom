@@ -9,12 +9,12 @@ import {
   shape as mathShape,
   drawCurves as drawCurvesMath,
   drawProfile as drawProfileMath
-} from "./mathematical";
-import { drawAxis, drawProfileGrid } from "./grids";
+} from "./render functions/mathematical";
+import { drawAxis, drawProfileGrid } from "./render functions/grids";
 import {
   drawCurves as drawCurvesPB,
   drawProfile as drawProfilePB
-} from "./pointBased";
+} from "./render functions/pointBased";
 import { getCurveColor, indexToHue } from "./colors";
 import styles from "./style.module.css";
 

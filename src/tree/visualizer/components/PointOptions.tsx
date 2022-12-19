@@ -1,7 +1,7 @@
 import { Component, Signal } from "solid-js";
 import { theme } from "~/../unocss-preset";
 import { remStringToPx } from "~/util";
-import { drawCurves } from "../pointBased";
+import { drawCurves } from "../render functions/pointBased";
 import Canvas from "./Canvas";
 import { getCurveColor } from "../colors";
 
