@@ -31,7 +31,7 @@ const Configurator: ParentComponent<{
     <div class="flex flex-col gap-s++ bg-srf pd-m0 round-m0 text-fg-1" style={`--hue: ${props.hue}`}>
       <h3 class="text-fg-0 font-bold">{props.curve.type}</h3>
       {props.children}
-      <div class="flex gap-s-">
+      <div class="relative flex gap-s-">
         <Button onClick={props.onRemove} hue={0} class="flex-1 round-m0 pd-m0">
           <div class="i-mdi-remove" />
         </Button>
@@ -72,28 +72,8 @@ const Main: Component<IProps> = (props) => {
       type: "point-based",
       visible: createSignal(false),
       shape: createSignal([
-        [0.0, 0.6],
-        [0.2, 0.6],
-        [0.4, 0.6],
-        [0.6, 0.6],
-        [0.8, 0.6],
-        [1.0, 0.6],
-      ]),
-    },
-    {
-      type: "point-based",
-      visible: createSignal(false),
-      shape: createSignal([
         [0.0, 0.3],
         [0.1, 0.8],
-        [0.2, 0.8],
-        [0.3, 0.8],
-        [0.4, 0.8],
-        [0.5, 0.8],
-        [0.6, 0.8],
-        [0.7, 0.8],
-        [0.8, 0.8],
-        [0.9, 0.8],
         [1.0, 0.8],
       ]),
     },
@@ -101,11 +81,13 @@ const Main: Component<IProps> = (props) => {
       type: "point-based",
       visible: createSignal(true),
       shape: createSignal([
-        [0.0, 0.3],
-        [0.1, 0.8],
-        [0.5, 0.9],
-        [0.9, 0.8],
-        [1.0, 0.7],
+        [0, 0.3],
+        [0.03, 0.63],
+        [0.12, 0.83],
+        [0.31, 0.88],
+        [0.5, 0.88],
+        [0.78, 0.77],
+        [1, 0.52]
       ]),
     }
   ]);
