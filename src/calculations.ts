@@ -31,16 +31,38 @@ const getPoint = (shape: number[][], pos: number) => {
   return lerp(p0[1], p1[1], t);
 };
 
-const getValues = (shapeP: number[][], numPoints: number) => {
-  const values = Array(numPoints).fill(1);
-  for (let i = values.length - 1; i >= 1; --i) {
-    let pointValue = getPoint(shapeP, (i - 1) / (values.length - 1));
-    for (let j = i; j < values.length; ++j) {
-      values[j] *= pointValue;
-    }
-    values[i - 1] *= 1 - pointValue;
+const getValues = (shapeP: number[][], numMips: number) => {
+  /**
+   * Generates light distribution array for a given mip within numMips
+   *
+   * @param mip mip index (>= 0; < numMips)
+   * @returns array of values representing light contribution to each mip
+   */
+  const getLayer = (mip: number) => [
+    ...Array(mip + 1).fill(1 / (mip + 1)),
+    ...Array(numMips - mip - 1).fill(0),
+  ];
+
+  const mips: number[][] = [];
+  for (let mipI = 0; mipI < numMips; ++mipI) {
+    mips[mipI] = getLayer(mipI);
   }
-  return values;
+
+  // Iterate between last mip and mip 1
+  for (let mipI = numMips - 1; mipI >= 1; --mipI) {
+    const current  = mips[mipI];
+    const next  = mips[mipI - 1];
+
+    const mipX = (mipI - 1) / (numMips - 1);
+    const mipBlend = getPoint(shapeP, mipX);
+
+    // Update next mip
+    mips[mipI - 1] = next.map((_, i) => (
+      lerp(next[i], current[i], mipBlend)
+    ));
+  }
+
+  return mips[0];
 };
 
 export {
