@@ -37,7 +37,7 @@ const getRange = (shape: number[][], pos: number): [number[], number[], number] 
 const getPoint = (shape: number[][], pos: number) => {
   let [p0, p1, offset] = getRange(shape, pos);
   let start = offset - p1[0];
-  let end = offset;
+  // let end = offset;
   let t = (pos - start) / p1[0];
   // t = 0.5-Math.cos(t*Math.PI)*0.5
   return lerp(p0[1], p1[1], t);
@@ -55,6 +55,8 @@ const getValues = (shapeP: number[][], numMips: number) => {
     ...Array(numMips - mip - 1).fill(0),
   ];
 
+  console.log('\naaaaa');
+
   const mips: number[][] = [];
   for (let mipI = 0; mipI < numMips; ++mipI) {
     mips[mipI] = getLayer(mipI);
@@ -65,7 +67,7 @@ const getValues = (shapeP: number[][], numMips: number) => {
     const current = mips[mipI];
     const next = mips[mipI - 1];
 
-    const mipX = mipI / (numMips - 1);
+    const mipX = (mipI - 1) / (numMips - 2);
     const mipBlend = getPoint(shapeP, mipX);
 
     // Update next mip
