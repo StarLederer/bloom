@@ -1,5 +1,12 @@
 import { getPoint, getPrecomputedShape, getValues } from "~/calculations";
 
+const getValuesPB = (shapeP: number[][], numMips: number) => {
+  return getValues(
+    (x) => getPoint(shapeP, x),
+    numMips
+  );
+};
+
 const drawCurves = (
   ctx: CanvasRenderingContext2D,
   shape: number[][],
@@ -32,7 +39,7 @@ const drawProfile = (
   const mips = 8;
 
   const shapeP = getPrecomputedShape(shape);
-  const values = getValues(shapeP, mips);
+  const values = getValuesPB(shapeP, mips);
 
   const x = ctx.canvas.width - 1;
   const y = ctx.canvas.height - 1;

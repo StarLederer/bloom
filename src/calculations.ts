@@ -43,7 +43,10 @@ const getPoint = (shape: number[][], pos: number) => {
   return lerp(p0[1], p1[1], t);
 };
 
-const getValues = (shapeP: number[][], numMips: number) => {
+const getValues = (
+  shape: (x: number) => number,
+  numMips: number
+) => {
   /**
    * Generates light distribution array for a given mip within numMips
    *
@@ -54,8 +57,6 @@ const getValues = (shapeP: number[][], numMips: number) => {
     ...Array(mip + 1).fill(1 / (mip + 1)),
     ...Array(numMips - mip - 1).fill(0),
   ];
-
-  console.log('\naaaaa');
 
   const mips: number[][] = [];
   for (let mipI = 0; mipI < numMips; ++mipI) {
@@ -68,7 +69,7 @@ const getValues = (shapeP: number[][], numMips: number) => {
     const next = mips[mipI - 1];
 
     const mipX = (mipI - 1) / (numMips - 2);
-    const mipBlend = getPoint(shapeP, mipX);
+    const mipBlend = shape(mipX);
 
     // Update next mip
     mips[mipI - 1] = next.map((_, i) => (

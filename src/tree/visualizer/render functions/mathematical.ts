@@ -1,4 +1,4 @@
-import { lerp } from "~/calculations";
+import { getValues, lerp } from "~/calculations";
 
 const shape = (x: number, i: number, h: number, a: number, b: number): number => {
   const c = Math.pow((2 * Math.pow(x, i)) - 1, 2);
@@ -30,21 +30,6 @@ const drawCurves = (
   }
   ctx.stroke();
 }
-
-const getValues = (
-  shape: (x: number) => number,
-  resolution: number
-) => {
-  const values = Array(resolution).fill(1);
-  for (let i = values.length - 1; i >= 1; --i) {
-    let pointValue = shape((i - 1) / (values.length - 1));
-    for (let j = i; j < values.length; ++j) {
-      values[j] *= pointValue;
-    }
-    values[i - 1] *= 1 - pointValue;
-  }
-  return values;
-};
 
 const drawProfile = (
   ctx: CanvasRenderingContext2D,
