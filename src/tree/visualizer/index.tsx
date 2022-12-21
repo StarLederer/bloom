@@ -72,6 +72,24 @@ const Main: Component<IProps> = (props) => {
       type: "point-based",
       visible: createSignal(false),
       shape: createSignal([
+        [0, 1],
+        [1, 1],
+      ]),
+    },
+    {
+      type: "point-based",
+      visible: createSignal(false),
+      shape: createSignal([
+        [0.0, 1.0],
+        [0.5, 1.0],
+        [0.5, 0.0],
+        [1.0, 0.0],
+      ]),
+    },
+    {
+      type: "point-based",
+      visible: createSignal(true),
+      shape: createSignal([
         [0.0, 0.3],
         [0.1, 0.8],
         [1.0, 0.8],
@@ -79,7 +97,7 @@ const Main: Component<IProps> = (props) => {
     },
     {
       type: "point-based",
-      visible: createSignal(true),
+      visible: createSignal(false),
       shape: createSignal([
         [0, 0.3],
         [0.03, 0.63],
