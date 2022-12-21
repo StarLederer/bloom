@@ -37,28 +37,31 @@ const drawProfile = (
   const x = ctx.canvas.width - 1;
   const y = ctx.canvas.height - 1;
 
-  // // Draw distances
-  // ctx.strokeStyle = "#fff4";
-  // values.forEach((val, i) => {
-  //   if (!ctx) return;
+  // Draw distances
+  let c = color.split(', ');
+  values.forEach((val, i) => {
+    if (!ctx) return;
 
-  //   const t = i / (values.length - 1);
-  //   const r = x / 2;
-  //   const px = Math.sin(t * Math.PI / 2) * r * val;
-  //   const py = -Math.cos(t * Math.PI / 2) * r * val;
+    const t = i / (values.length - 1);
+    const r = x / 2;
+    const px = Math.sin(t * Math.PI / 2) * r;
+    const py = -Math.cos(t * Math.PI / 2) * r;
 
-  //   ctx.beginPath();
+    c[3] = val * 100 + "%)";
+    ctx.strokeStyle = c.join(', ');
 
-  //   ctx.moveTo(x / 2, y);
-  //   ctx.lineTo(x / 2 + px, y + py);
+    ctx.beginPath();
 
-  //   if (i > 0) {
-  //     ctx.moveTo(x / 2, y);
-  //     ctx.lineTo(x / 2 - px, y + py);
-  //   }
+    ctx.moveTo(x / 2, y);
+    ctx.lineTo(x / 2 + px, y + py);
 
-  //   ctx.stroke();
-  // })
+    if (i > 0) {
+      ctx.moveTo(x / 2, y);
+      ctx.lineTo(x / 2 - px, y + py);
+    }
+
+    ctx.stroke();
+  })
 
   // Draw blob
   ctx.strokeStyle = color;
