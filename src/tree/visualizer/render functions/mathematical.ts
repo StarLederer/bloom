@@ -52,8 +52,8 @@ const drawProfile = (
   resolution: number,
   color: string
 ) => {
-  const x = ctx.canvas.width;
-  const y = ctx.canvas.height;
+  const x = ctx.canvas.width - 1;
+  const y = ctx.canvas.height - 1;
 
   const values = getValues(shape, resolution);
 

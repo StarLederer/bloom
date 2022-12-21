@@ -5,8 +5,8 @@ const drawCurves = (
   shape: number[][],
   color: string
 ) => {
-  const x = ctx.canvas.width;
-  const y = ctx.canvas.height;
+  const x = ctx.canvas.width - 1;
+  const y = ctx.canvas.height - 1;
 
   ctx.strokeStyle = color;
   const shapeP = getPrecomputedShape(shape);
@@ -34,8 +34,8 @@ const drawProfile = (
   const shapeP = getPrecomputedShape(shape);
   const values = getValues(shapeP, mips);
 
-  const x = ctx.canvas.width;
-  const y = ctx.canvas.height;
+  const x = ctx.canvas.width - 1;
+  const y = ctx.canvas.height - 1;
 
   // // Draw distances
   // ctx.strokeStyle = "#fff4";

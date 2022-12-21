@@ -1,8 +1,8 @@
 const drawAxis = (
   ctx: CanvasRenderingContext2D,
 ) => {
-  const x = ctx.canvas.width;
-  const y = ctx.canvas.height;
+  const x = ctx.canvas.width - 1;
+  const y = ctx.canvas.height - 1;
 
   ctx.fillStyle = "#fff2";
   ctx.fillRect(0, 0, x, 1);
@@ -13,8 +13,8 @@ const drawProfileGrid = (
   ctx: CanvasRenderingContext2D,
   resolution: number
 ) => {
-  const x = ctx.canvas.width;
-  const y = ctx.canvas.height;
+  const x = ctx.canvas.width - 1;
+  const y = ctx.canvas.height - 1;
 
   ctx.strokeStyle = "#fff2";
   for (let i = 0; i < resolution; ++i) {
