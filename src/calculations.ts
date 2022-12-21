@@ -1,5 +1,17 @@
 const lerp = (a: number, b: number, t: number) => (a + (b - a) * t);
 
+const dot = (a: [number, number], b: [number, number]) => a.map((x, i) => a[i] * b[i]).reduce((m, n) => m + n);
+
+const magnitude = (vec: [number, number]) =>
+  Math.sqrt(vec[0] * vec[0] + vec[1] * vec[1]);
+
+const normalize = (vec: [number, number]) => {
+  const mag = magnitude(vec);
+  vec[0] /= mag;
+  vec[1] /= mag;
+  return vec;
+}
+
 const getPrecomputedShape = (shape: number[][]) => {
   let pos = 0;
   return shape.map((point) => {
@@ -50,10 +62,10 @@ const getValues = (shapeP: number[][], numMips: number) => {
 
   // Iterate between last mip and mip 1
   for (let mipI = numMips - 1; mipI >= 1; --mipI) {
-    const current  = mips[mipI];
-    const next  = mips[mipI - 1];
+    const current = mips[mipI];
+    const next = mips[mipI - 1];
 
-    const mipX = (mipI - 1) / (numMips - 1);
+    const mipX = mipI / (numMips - 1);
     const mipBlend = getPoint(shapeP, mipX);
 
     // Update next mip
@@ -67,6 +79,9 @@ const getValues = (shapeP: number[][], numMips: number) => {
 
 export {
   lerp,
+  dot,
+  magnitude,
+  normalize,
   getPrecomputedShape,
   getRange,
   getPoint,
