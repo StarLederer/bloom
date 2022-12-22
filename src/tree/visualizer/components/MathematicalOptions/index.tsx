@@ -20,7 +20,7 @@ const Main: Component<{
 
       <label class={styles.label}>
         <span>
-          Back intensity&nbsp;
+          LF boost&nbsp;
           <span class="text-fg-3">{props.h[0]()}</span>
         </span>
         <Slider step={0.01} signal={props.h} />
@@ -28,7 +28,7 @@ const Main: Component<{
 
       <label class={styles.label}>
         <span>
-          Back curvature&nbsp;
+          LF boost curv.&nbsp;
           <span class="text-fg-3">{props.a[0]()}</span>
         </span>
         <Slider step={0.01} signal={props.a} />
@@ -36,7 +36,7 @@ const Main: Component<{
 
       <label class={styles.label}>
         <span>
-          Highpass&nbsp;
+          High-pass freq.&nbsp;
           <span class="text-fg-3">{props.b[0]()}</span>
         </span>
         <Slider step={0.01} signal={props.b} />
