@@ -1,13 +1,27 @@
 import { getValues, lerp } from "~/calculations";
 
-const shape = (x: number, i: number, h: number, a: number, b: number): number => {
-  const c = Math.pow((2 * Math.pow(x, i)) - 1, 2);
-  const sigmoid = (x: number, k: number) => {
-    return (x - k * x) / (k - 2 * k * Math.abs(x) + 1)
-  };
-  const s = (1 + sigmoid(Math.pow(0.5, 1 / i) - x, -1)) / 2
-  const d = lerp(b, a, s);
-  return (1 - c * (1 - d)) * h;
+// const shape = (x: number, i: number, h: number, a: number, b: number): number => {
+//   const c = Math.pow((2 * Math.pow(x, i)) - 1, 2);
+//   const sigmoid = (x: number, k: number) => {
+//     return (x - k * x) / (k - 2 * k * Math.abs(x) + 1)
+//   };
+//   const s = (1 + sigmoid(Math.pow(0.5, 1 / i) - x, -1)) / 2
+//   const d = lerp(b, a, s);
+//   return (1 - c * (1 - d)) * h;
+// }
+
+const shape = (
+  x: number,
+  intensity: number,
+  bumpIntensity: number,
+  bumpCurvature: number,
+  highPassFrequency: number
+): number => {
+  const bump = (1 - (1 - x) ** (1 / bumpCurvature)) * bumpIntensity;
+  const highPassLQ = 1 - Math.min(Math.max((x- highPassFrequency) / highPassFrequency, 0), 1);
+  const highPassHQ = 0.5 + 0.5 * Math.cos(Math.min(Math.max((x- highPassFrequency) / highPassFrequency, 0), 1) * Math.PI);
+  const highPass = highPassHQ;
+  return (intensity + (1 - intensity) * bump) * highPass;
 }
 
 const drawCurves = (

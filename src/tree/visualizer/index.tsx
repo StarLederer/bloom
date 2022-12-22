@@ -52,9 +52,9 @@ const Configurator: ParentComponent<{
 type IMathematicalCurve = {
   type: "mathematical";
   i: Signal<number>;
-  h: Signal<number>;
-  a: Signal<number>;
-  b: Signal<number>;
+  bI: Signal<number>;
+  bC: Signal<number>;
+  hF: Signal<number>;
 }
 
 type IPointCurve = {
@@ -94,19 +94,6 @@ const Main: Component<IProps> = (props) => {
         [0.1, 0.8],
         [1.0, 0.8],
       ]),
-    },
-    {
-      type: "point-based",
-      visible: createSignal(false),
-      shape: createSignal([
-        [0, 0.3],
-        [0.03, 0.63],
-        [0.12, 0.83],
-        [0.31, 0.88],
-        [0.5, 0.88],
-        [0.78, 0.77],
-        [1, 0.52]
-      ]),
     }
   ]);
 
@@ -126,7 +113,7 @@ const Main: Component<IProps> = (props) => {
           drawCurvesMath(
             ctx,
             (x: number): number => {
-              return mathShape(x, curve.i[0](), curve.h[0](), curve.a[0](), curve.b[0]());
+              return mathShape(x, curve.i[0](), curve.bI[0](), curve.bC[0](), curve.hF[0]());
             },
             32,
             getCurveColor(i)
@@ -155,7 +142,7 @@ const Main: Component<IProps> = (props) => {
           drawProfileMath(
             ctx,
             (x: number): number => {
-              return mathShape(x, curve.i[0](), curve.h[0](), curve.a[0](), curve.b[0]());
+              return mathShape(x, curve.i[0](), curve.bI[0](), curve.bC[0](), curve.hF[0]());
             },
             8,
             getCurveColor(i)
@@ -187,9 +174,9 @@ const Main: Component<IProps> = (props) => {
                 case "mathematical":
                   return <MathematicalOptions
                     i={curve.i}
-                    h={curve.h}
-                    a={curve.a}
-                    b={curve.b}
+                    h={curve.bI}
+                    a={curve.bC}
+                    b={curve.hF}
                   />;
                 case "point-based":
                   return <PointOptions
@@ -209,9 +196,9 @@ const Main: Component<IProps> = (props) => {
                 type: "mathematical",
                 visible: createSignal(true),
                 i: createSignal(0.5),
-                h: createSignal(0.9),
-                a: createSignal(0.3),
-                b: createSignal(0.8),
+                bI: createSignal(0.9),
+                bC: createSignal(0.3),
+                hF: createSignal(0.8),
               }];
             });
           }}

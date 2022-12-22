@@ -12,7 +12,7 @@ const Main: Component<{
     <div class="flex flex-col gap-s+">
       <label class={styles.label}>
         <span>
-          Bump angle&nbsp;
+          Intensity&nbsp;
           <span class="text-fg-3">{Math.round(props.i[0]() * 45)}deg ({props.i[0]()})</span>
         </span>
         <Slider step={0.01} signal={props.i} />
@@ -20,7 +20,7 @@ const Main: Component<{
 
       <label class={styles.label}>
         <span>
-          Top intensity&nbsp;
+          Back intensity&nbsp;
           <span class="text-fg-3">{props.h[0]()}</span>
         </span>
         <Slider step={0.01} signal={props.h} />
@@ -28,7 +28,7 @@ const Main: Component<{
 
       <label class={styles.label}>
         <span>
-          Near contribution&nbsp;
+          Back curvature&nbsp;
           <span class="text-fg-3">{props.a[0]()}</span>
         </span>
         <Slider step={0.01} signal={props.a} />
@@ -36,7 +36,7 @@ const Main: Component<{
 
       <label class={styles.label}>
         <span>
-          Far contribution&nbsp;
+          Highpass&nbsp;
           <span class="text-fg-3">{props.b[0]()}</span>
         </span>
         <Slider step={0.01} signal={props.b} />
