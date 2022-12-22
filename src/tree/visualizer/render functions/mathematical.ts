@@ -13,15 +13,15 @@ import { getValues, lerp } from "~/calculations";
 const shape = (
   x: number,
   intensity: number,
-  bumpIntensity: number,
-  bumpCurvature: number,
+  lfBoostIntensity: number,
+  lfBoostCurvature: number,
   highPassFrequency: number
 ): number => {
-  const bump = (1 - (1 - x) ** (1 / bumpCurvature)) * bumpIntensity;
-  const highPassLQ = 1 - Math.min(Math.max((x- highPassFrequency) / highPassFrequency, 0), 1);
-  const highPassHQ = 0.5 + 0.5 * Math.cos(Math.min(Math.max((x- highPassFrequency) / highPassFrequency, 0), 1) * Math.PI);
+  const lfBoost = (1 - (1 - x) ** (1 / (1 - lfBoostCurvature))) * lfBoostIntensity;
+  const highPassLQ = 1 - Math.min(Math.max((x - highPassFrequency) / highPassFrequency, 0), 1);
+  const highPassHQ = 0.5 + 0.5 * Math.cos(Math.min(Math.max((x - highPassFrequency) / highPassFrequency, 0), 1) * Math.PI);
   const highPass = highPassHQ;
-  return (intensity + (1 - intensity) * bump) * highPass;
+  return (intensity + (1 - intensity) * lfBoost) * highPass;
 }
 
 const drawCurves = (
