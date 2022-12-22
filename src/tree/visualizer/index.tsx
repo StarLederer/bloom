@@ -30,6 +30,9 @@ const Configurator: ParentComponent<{
   return (
     <div class="flex flex-col gap-s++ bg-srf pd-m0 round-m0 text-fg-1" style={`--hue: ${props.hue}`}>
       <h3 class="text-fg-0 font-bold">{props.curve.type}</h3>
+      {props.curve.comment && (
+        <p class="max-width-l0">{props.curve.comment}.</p>
+      )}
       {props.children}
       <div class="relative flex gap-s-">
         <Button onClick={props.onRemove} hue={0} class="flex-1 round-m0 pd-m0">
@@ -64,20 +67,33 @@ type IPointCurve = {
 
 type ICurve = (IMathematicalCurve | IPointCurve) & {
   visible: Signal<boolean>
+  comment?: string,
 };
 
 const Main: Component<IProps> = (props) => {
   const [curves, setCurves] = createSignal<ICurve[]>([
     {
       type: "point-based",
-      visible: createSignal(false),
+      comment: "Typycal blend curve in Unity",
+      visible: createSignal(true),
       shape: createSignal([
-        [0, 1],
-        [1, 1],
+        [0.0, 0.3],
+        [0.1, 0.8],
+        [1.0, 0.8],
       ]),
     },
     {
+      type: "mathematical",
+      comment: "Our method replicating the curve above",
+      visible: createSignal(true),
+      i: createSignal(0.3),
+      bI: createSignal(0.71),
+      bC: createSignal(0.05),
+      hF: createSignal(1),
+    },
+    {
       type: "point-based",
+      comment: "Screen blur",
       visible: createSignal(false),
       shape: createSignal([
         [0.0, 1.0],
@@ -87,14 +103,14 @@ const Main: Component<IProps> = (props) => {
       ]),
     },
     {
-      type: "point-based",
-      visible: createSignal(true),
-      shape: createSignal([
-        [0.0, 0.3],
-        [0.1, 0.8],
-        [1.0, 0.8],
-      ]),
-    }
+      type: "mathematical",
+      comment: "Our method creating screen blur",
+      visible: createSignal(false),
+      i: createSignal(1),
+      bI: createSignal(0),
+      bC: createSignal(1),
+      hF: createSignal(0.33),
+    },
   ]);
 
   const renderCurves = () => (ctx: CanvasRenderingContext2D) => {
