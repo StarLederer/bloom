@@ -88,7 +88,7 @@ const Main: Component<IProps> = (props) => {
       visible: createSignal(true),
       i: createSignal(0.3),
       bI: createSignal(0.71),
-      bC: createSignal(0.05),
+      bC: createSignal(0.95),
       hF: createSignal(1),
     },
     {
@@ -108,7 +108,7 @@ const Main: Component<IProps> = (props) => {
       visible: createSignal(false),
       i: createSignal(1),
       bI: createSignal(0),
-      bC: createSignal(1),
+      bC: createSignal(0),
       hF: createSignal(0.33),
     },
   ]);
