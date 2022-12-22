@@ -31,7 +31,7 @@ const Configurator: ParentComponent<{
     <div class="flex flex-col gap-s++ bg-srf pd-m0 round-m0 text-fg-1" style={`--hue: ${props.hue}`}>
       <h3 class="text-fg-0 font-bold">{props.curve.type}</h3>
       {props.curve.comment && (
-        <p class="max-width-l0">{props.curve.comment}.</p>
+        <p class="text-fg-2 max-width-l0">{props.curve.comment}.</p>
       )}
       {props.children}
       <div class="relative flex gap-s-">
